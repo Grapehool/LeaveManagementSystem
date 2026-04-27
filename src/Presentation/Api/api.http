@@ -1,0 +1,36 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@host = http://localhost:5017/api
+
+### Register
+# @name register
+POST {{host}}/auth/register
+Content-Type: application/json
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "1234"
+}
+
+### Login
+# @name login
+POST {{host}}/auth/login
+Content-Type: application/json
+{
+  "email": "test@example.com",
+  "password": "1234"
+}
+
+### Extract token
+@jwt = {{login.response.body.$.token}}
+
+### Reject Leave
+POST {{host}}/manage/leaves/reject
+Authorization: Bearer {{jwt}}
+
+### Get History
+GET {{host}}/history
+Authorization: Bearer {{jwt}}
+
+### Get Balance
+GET {{host}}/balance
+Authorization: Bearer {{jwt}}
