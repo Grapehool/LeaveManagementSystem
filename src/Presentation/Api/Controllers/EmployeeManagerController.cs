@@ -1,9 +1,11 @@
 ﻿using Application.Interfaces;
 using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("api/manage/employees")]
     [ApiController]
     public class EmployeeManagerController(IManagerService managerService) : ControllerBase
