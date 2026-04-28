@@ -24,14 +24,16 @@ namespace ConsoleUI.App
             {
                 var authMenu = new AuthMenu(_apiClient);
                 bool isLoggedIn = false;
-                try
-                {
-                    isLoggedIn = await authMenu.Authenticate();
-                }
-                catch (HttpRequestException)
-                {
-                    UIHelpers.WriteWarning("\nThe Backend Server is offline! Please restart the application.");
-                }
+                isLoggedIn = await authMenu.Authenticate();
+
+                //try
+                //{
+                //    isLoggedIn = await authMenu.Authenticate();
+                //}
+                //catch (HttpRequestException)
+                //{
+                //    UIHelpers.WriteWarning("\nThe Backend Server is offline! Please restart the application.");
+                //}
 
                 if (isLoggedIn)
                 {
