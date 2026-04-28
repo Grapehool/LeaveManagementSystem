@@ -1,5 +1,6 @@
 ﻿using ConsoleUI.Menus;
 using ConsoleUI.Services;
+using ConsoleUI.Helpers;
 
 namespace ConsoleUI.App
 {
@@ -22,7 +23,15 @@ namespace ConsoleUI.App
             while (true)
             {
                 var authMenu = new AuthMenu(_apiClient);
-                bool isLoggedIn = await authMenu.Authenticate();
+                bool isLoggedIn = false;
+                try
+                {
+                    isLoggedIn = await authMenu.Authenticate();
+                }
+                catch (HttpRequestException)
+                {
+                    UIHelpers.WriteWarning("\nThe Backend Server is offline! Please restart the application.");
+                }
 
                 if (isLoggedIn)
                 {
@@ -38,6 +47,11 @@ namespace ConsoleUI.App
                         var userMainMenu = new MainMenu(_apiClient);
                         await userMainMenu.Show();
                     }
+                }
+                else
+                {
+                    Console.ReadKey(true);
+                    return;
                 }
             }
         }
